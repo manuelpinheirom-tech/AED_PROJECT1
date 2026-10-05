@@ -1,4 +1,8 @@
+import dataStructures.Iterator;
+
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+import dataStructures.*;
 
 public class Main {
 
@@ -38,10 +42,10 @@ public class Main {
         while(!command.equalsIgnoreCase(QUIT)) {
             switch (command) {
                 case HELP -> help();
-                case ADD -> add();
-                case REMOVE -> remove();
-                case POPULATION -> population();
-                case LIST -> list();
+                case ADD -> add(in, app);
+                case REMOVE -> remove(in, app);
+                case POPULATION -> population(in, app);
+                case LIST -> list(in, app);
             }
             command = in.nextLine();
         }
@@ -49,23 +53,53 @@ public class Main {
     }
 
     private static void help() {
-
+        System.out.printf(HELP_MESSAGE);
     }
 
-    private static void add() {
-
+    private static void add(Scanner in, App app) {
+        String name  = in.nextLine();
+        String country = in.nextLine();
+        int population = in.nextInt();
+        in.nextLine();
+        try{
+            app.addCity(name, country, population);
+            System.out.printf(ADDED);
+        }catch(Exception e){
+            System.out.printf(ALREADY_EXISTS);
+        }
     }
 
-    private static void remove() {
-
+    private static void remove(Scanner in, App app) {
+        String cityName = in.nextLine();
+        String country = in.nextLine();
+        try{
+            app.removeCity(cityName, country);
+            System.out.printf(REMOVED);
+        }catch(Exception e){
+            System.out.printf(NOT_FOUND);
+        }
     }
 
-    private static void population() {
-
+    private static void population(Scanner in, App app) {
+        String city = in.nextLine();
+        String country = in.nextLine();
+        try{
+            System.out.printf(POPULATION_MSG, app.getPopulation(city, country));
+        }catch(Exception e){
+            System.out.printf(NOT_FOUND);
+        }
     }
 
-    private static void list() {
-
+    private static void list(Scanner in,  App app) {
+        try{
+            Iterator<City> it = app.listCities();
+            while(it.hasNext()) {
+                City city = it.next();
+                System.out.printf(LIST_MSG, city.getCountry(),city.getInhabitants(), city.getName());
+            }
+        }catch(NoSuchElementException e){
+            System.out.printf(NOT_AVAILABLE);
+        }
     }
 
 }
