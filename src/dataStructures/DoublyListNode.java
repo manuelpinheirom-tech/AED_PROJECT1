@@ -30,7 +30,6 @@ class DoublyListNode<E> extends SinglyListNode<E> implements Serializable {
          * @param theElement to be contained in the node
          */
         public DoublyListNode(E theElement ) {
-            super(theElement);
             this.previous=null;
         }
         /**

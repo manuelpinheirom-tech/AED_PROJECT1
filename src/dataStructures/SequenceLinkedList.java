@@ -82,19 +82,8 @@ abstract class SequenceLinkedList<E> extends LinkedList<E> implements List<E>{
      * @return position of the element in the list (or -1)
      */
     public int indexOf(E element) {
-        if(element == null)
-            throw new NullPointerException();
-        LinkedNode<E> node = head;
-        int pos = 0;
-        while(node != null){
-            if((element == null && node.getElement() == null) ||
-            (element != null && element.equals(node.getElement()))){
-                return pos;
-            }
-            pos++;
-            node = node.getNext();
-        }
-        return NOT_FOUND;
+        //TODO: Left as an exercise.
+        return 0;
     }
 
     /**
@@ -213,6 +202,5 @@ abstract class SequenceLinkedList<E> extends LinkedList<E> implements List<E>{
 
     void addElem(E element){
         //TODO: Left as an exercise.
-        addLast(element);
     }
 }
