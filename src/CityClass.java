@@ -3,15 +3,12 @@ public class CityClass implements City{
     final int population;
     final String name;
 
-    public CityClass(String country, int inhabitants, String name){
-        this.country = country;
-        this.inhabitants = inhabitants;
+    public CityClass(int population, String name){
+        this.population = population;
         this.name = name;
     }
 
-    public String getCountry() {
-        return country;
-    }
+    @Override
     public String getName (){
         return name;
     }
@@ -22,7 +19,7 @@ public class CityClass implements City{
     }
 
 
-    public int compareTo(City other){
+    /*public int compareTo(City other){
         int countryComp = this.country.compareToIgnoreCase(other.getCountry());
         if(countryComp != 0){
             return countryComp;
@@ -33,4 +30,5 @@ public class CityClass implements City{
         }
         return this.name.compareToIgnoreCase(other.getName());
     }
+    */
 }
