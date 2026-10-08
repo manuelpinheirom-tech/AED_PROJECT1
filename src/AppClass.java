@@ -1,5 +1,7 @@
-import dataStructures.DoublyLinkedList;
+
 import dataStructures.Iterator;
+import dataStructures.SortedLinkedList;
+import dataStructures.exceptions.ElementAlreadyExistsException;
 import dataStructures.exceptions.NoSuchElementException;
 
 import java.io.Serializable;
@@ -7,66 +9,74 @@ import java.io.Serializable;
 public class AppClass implements App, Serializable {
     private static final long serialVersionUID = 1L;
 
-    DoublyLinkedList<City> cities;
+    SortedLinkedList<Country> countries;
 
-    public AppClass(){
-        this.cities = new DoublyLinkedList();
+    public AppClass() {
+        this.countries = new SortedLinkedList<Country>(new CountryComparator());
     }
 
-    //tenho de meter exceção aqui pa qnd ja existe mas pila nao tenho paciencia agora
-    public void addCity(String cityName,  String countryName, int population) throws NoSuchElementException {
-        Iterator<City> iterator = this.cities.iterator();
-        while (iterator.hasNext()){
-            City city = iterator.next();
-            if(city.getName().equals(cityName) &&  city.getCountry().equals(countryName)){
-                throw  new NoSuchElementException();
-            }
-        }
-        City c = new CityClass(countryName, population, cityName);
-        iterator = this.cities.iterator();
-        int position = 0;
-        while (iterator.hasNext()){
-            City current = iterator.next();
-            if(c.compareTo(current) < 0){
-                cities.add(position ++, c);
-            }
-        }
-        cities.addLast(c);
+    @Override
+    public void addCity(String city, String countryName, int population) throws NoSuchElementException {
+        Country country = findCountry(countryName);
+        if (country == null)
+            country = addCountry(countryName);
+        else if (country.hasCity(city))
+            throw new ElementAlreadyExistsException();
+        country.addCity(city, population);
     }
 
-    public void removeCity(String cityName, String countryName) throws NoSuchElementException {
-        Iterator<City> iterator = this.cities.iterator();
-        int pos = 0;
-        boolean removed = false;
-        while(iterator.hasNext()){
-            City current = iterator.next();
-            if(current.getName().equals(cityName) &&  current.getCountry().equals(countryName)){
-                cities.remove(pos);
-                removed = true;
-            }
-            pos++;
+    @Override
+    public void removeCity(String city, String countryName) throws NoSuchElementException {
+        Country country = findCountry(countryName);
+        if (country == null || !country.hasCity(city)) {
+            throw new NoSuchElementException();
         }
-        if(!removed){
-            throw  new NoSuchElementException();
-        }
-
+        country.removeCity(city);
+        if (country.isEmpty())
+            countries.remove(country);
     }
 
-    public int getPopulation(String city, String country) throws NoSuchElementException {
-        Iterator<City> iterator = this.cities.iterator();
-        while (iterator.hasNext()){
-            City current = iterator.next();
-            if(current.getName().equals(city) &&  current.getCountry().equals(country)){
-                return current.getInhabitants();
-            }
+    @Override
+    public int getPopulation(String cityName, String countryName) throws NoSuchElementException {
+        Country country = findCountry(countryName);
+        City city;
+        if (country == null) {
+            throw new NoSuchElementException();
         }
-        throw  new NoSuchElementException();
+        city = country.findCity(cityName);
+        if (city == null) {
+            throw new NoSuchElementException();
+        }
+        return city.getPopulation();
     }
 
-    public Iterator<City> listCities()throws NoSuchElementException{
-        if(this.cities.isEmpty()){
-            throw  new NoSuchElementException();
+    @Override
+    public Iterator<Country> listCountries()  throws NoSuchElementException {
+        if (countries.isEmpty()) {
+            throw new NoSuchElementException();
         }
-        return this.cities.iterator();
+        return countries.iterator();
+    }
+
+    private Country findCountry(String countryName) {
+        if (countries.isEmpty()) {
+            return null;
+        }
+        Iterator<Country> iterator = countries.iterator();
+        while (iterator.hasNext()) {
+            Country country = iterator.next();
+            if(country.getName().equalsIgnoreCase(countryName)){
+                return country;
+            }
+        }
+        return null;
+    }
+
+    private Country addCountry(String countryName) {
+        Country country = new CountryClass(countryName);
+        countries.add(country);
+        return country;
     }
 }
+
+

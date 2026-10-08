@@ -33,9 +33,11 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
      * @return first element in the list
      * @throws NoSuchElementException - if size() == 0
      */
-    public E getMin( ) {
+    public E getMin( ) throws NoSuchElementException {
         //TODO: Left as an exercise.
-        return null;
+        if (isEmpty())
+            throw new NoSuchElementException();
+        return head.getElement();
     }
 
     /**
@@ -45,7 +47,9 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
      */
     public E getMax( ) {
         //TODO: Left as an exercise.
-        return null;
+        if (isEmpty())
+            throw new NoSuchElementException();
+        return tail.getElement();
     }
     /**
      * Returns the first occurrence of the element equals to the given element in the list.
@@ -54,6 +58,12 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
     @Override
     public E get(E element) {
         //TODO: Left as an exercise.
+        LinkedNode<E> current = head;
+        while (current != null) {
+            if(current.getElement().equals(element))
+                 return current.getElement();
+            current = current.getNext();
+        }
         return null;
     }
     /**
@@ -64,7 +74,7 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
      */
     public boolean contains(E element) {
         //TODO: Left as an exercise.
-        return true;
+        return get(element) != null;
     }
 
     /**
@@ -74,58 +84,92 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
      */
     public void add(E element) {
         //TODO: Left as an exercise.
+        if (isEmpty() || comparator.compare(element, tail.getElement()) >= 0) {
+            addLast(element);
+        } else if (comparator.compare(element, head.getElement()) < 0) {
+            addFirst(element);
+        } else {
+            LinkedNode<E> prev = head;
+            LinkedNode<E> curr = head.getNext();
+            while (comparator.compare(element, curr.getElement()) >= 0) {
+                prev = curr;
+                curr = curr.getNext();
+            }
+            addMiddleNode(new pairNode<>(prev, curr), new SinglyListNode<>(element, null));
+        }
+        assert invariant();
     }
 
-/**
- * Inserts the element before node after.
- * Precondition: after is not the head of the list.
- * @param element - Element to be inserted
- * @param before - Node to be previous to the new node
- */
-void addBeforeNode(E element, LinkedNode<E> before){
-    //TODO: Left as an exercise.
-}
-/**
- * Inserts the element at the first position in the list.
- * @param element - Element to be inserted
- */
-void addFirst( E element ) {
-    //TODO: Left as an exercise.
-}
+    /**
+     * Inserts the element before node after.
+     * Precondition: after is not the head of the list.
+     * @param element - Element to be inserted
+     * @param before - Node to be previous to the new node
+     */
+    void addBeforeNode(E element, LinkedNode<E> before){
+        //TODO: Left as an exercise.
+        LinkedNode<E> prev = head;
+        while (prev != null && prev.getNext() != before)
+            prev = prev.getNext();
+        addMiddleNode(new pairNode<>(prev, before), new SinglyListNode<>(element, null));
+    }
 
-/**
- * Inserts the element at the last position in the list.
- * @param element - Element to be inserted
- */
-void addLast( E element ) {
-    //TODO: Left as an exercise.
-}
+    /**
+     * Inserts the element at the first position in the list.
+     * @param element - Element to be inserted
+     */
+    void addFirst( E element ) {
+        //TODO: Left as an exercise.
+        LinkedNode<E> newNode = new SinglyListNode<E>(element, null);
+        addFirstNode(newNode);
+    }
 
-/**
- * Removes and returns the first occurrence of the element equals to the given element in the list.
- * @return element removed from the list or null if !belongs
- */
-public E remove(E element) {
-    //TODO: Left as an exercise.
-    return null;
-}
+    /**
+     * Inserts the element at the last position in the list.
+     * @param element - Element to be inserted
+     */
+    void addLast( E element ) {
+        //TODO: Left as an exercise.
+        LinkedNode<E> newNode = new SinglyListNode<E>(element, null);
+        addLastNode(newNode);
+    }
+
+    /**
+     * Removes and returns the first occurrence of the element equals to the given element in the list.
+     * @return element removed from the list or null if !belongs
+     */
+    public E remove(E element) {
+        //TODO: Left as an exercise.
+        pairNode<E> pair = nodeOf(element);
+        if (pair == null)
+            return null;
+        E removed = pair.node().getElement();
+        if (pair.prev() == null)
+            removeFirstNode();
+        else if (pair.node() == tail)
+            removeLastNode(pair);
+        else
+            removeMiddleNode(pair);
+        return removed;
+        //VE ME SE ESTA MERDA FAZ SENTUIDO SFF
+    }
+
+    void addElem(E element){
+        //TODO: Left as an exercise.
+    }
 
 
+    private boolean invariant() {
+        //TODO: Left as an exercise.
+        return true;
+        //MANU VE ESTA MERDA QUE TA NO ULTIMO SLIDE DO ULTIMO PPT E FAZ Q EU N TENHO PACIENCIA. ORBIGADFO
+        //AGRADECE AO GEMINI TB
+    }
 
-void addElem(E element){
-    //TODO: Left as an exercise.
-}
-
-
-private boolean invariant() {
-    //TODO: Left as an exercise.
-    return true;
-}
-
-void writeData(ObjectOutputStream oos) throws IOException {
-    oos.defaultWriteObject(); // write the normal attributes
-}
-void readData(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-    ois.defaultReadObject(); // read the normal attributes
-}
+    void writeData(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject(); // write the normal attributes
+    }
+    void readData(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject(); // read the normal attributes
+    }
 }

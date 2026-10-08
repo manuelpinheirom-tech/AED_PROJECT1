@@ -2,7 +2,6 @@ import dataStructures.Iterator;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import dataStructures.*;
 
 public class Main {
 
@@ -25,7 +24,6 @@ public class Main {
     private static final String REMOVED = "City successfully removed.\n";
     private static final String NOT_FOUND = "City not found.\n";
     private static final String POPULATION_MSG = "Population: %d\n";
-    private static final String NOT_EXISTS = "City not found.\n";
     private static final String LIST_MSG = "%s - %d - %s\n";
     private static final String NOT_AVAILABLE = "No cities available.\n";
 
@@ -49,11 +47,16 @@ public class Main {
             }
             command = in.nextLine();
         }
-        System.out.printf(QUIT_MSG);
+        quit();
     }
 
     private static void help() {
         System.out.printf(HELP_MESSAGE);
+    }
+
+    private static void quit(){
+        //va meter a mrd da serialização aqui
+        System.out.printf(QUIT_MSG);
     }
 
     private static void add(Scanner in, App app) {
@@ -92,10 +95,14 @@ public class Main {
 
     private static void list(Scanner in,  App app) {
         try{
-            Iterator<City> it = app.listCities();
-            while(it.hasNext()) {
-                City city = it.next();
-                System.out.printf(LIST_MSG, city.getCountry(),city.getInhabitants(), city.getName());
+            Iterator<Country> itCountry = app.listCountries();
+            while(itCountry.hasNext()) {
+                Country country = itCountry.next();
+                Iterator<City> itCity = country.listCities();
+                while (itCity.hasNext()) {
+                    City city = itCity.next();
+                    System.out.printf(LIST_MSG, country.getName(), city.getPopulation(), city.getName());
+                }
             }
         }catch(NoSuchElementException e){
             System.out.printf(NOT_AVAILABLE);

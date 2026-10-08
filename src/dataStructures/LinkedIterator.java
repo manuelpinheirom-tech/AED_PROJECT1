@@ -30,4 +30,18 @@ class LinkedIterator<E>  implements Iterator<E> {
     }
 
     //TODO: Left as an exercise.
+    @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
+    public E next() throws NoSuchElementException {
+        return null;
+    }
+
+    @Override
+    public void rewind() {
+
+    }
 }

@@ -40,16 +40,14 @@ abstract class LinkedList<E> implements Serializable {
      * @return true if the list is empty
      */
     public boolean isEmpty() {
-	//TODO: Left as an exercise.
-        return true;
+        return currentSize==0;
     }
     /**
      * Returns the number of elements in the list.
      * @return number of elements in the list
      */
     public int size() {
-	//TODO: Left as an exercise.
-        return 0;
+        return currentSize;
     }
 
     /**
@@ -66,6 +64,12 @@ abstract class LinkedList<E> implements Serializable {
      */
     void addFirstNode(LinkedNode<E> newNode){
         //TODO: Left as an exercise.
+        newNode.setNext(head);
+        head = newNode;
+        if (isEmpty()) {
+            tail = newNode;
+        }
+        currentSize++;
     }
     /**
      * Insert a node on the tail of list
@@ -73,6 +77,14 @@ abstract class LinkedList<E> implements Serializable {
      */
     void addLastNode(LinkedNode<E> newNode){
 	//TODO: Left as an exercise.
+        newNode.setNext(null);
+        if (isEmpty()) {
+            head = newNode;
+        } else {
+            tail.setNext(newNode);
+        }
+        tail = newNode;
+        currentSize++;
     }
     /**
      * Record with two nodes (prev, node)
@@ -88,6 +100,9 @@ abstract class LinkedList<E> implements Serializable {
      */
     void addMiddleNode(pairNode<E> pair,LinkedNode<E> newNode){
  	//TODO: Left as an exercise.
+        newNode.setNext(pair.node);
+        pair.prev().setNext(newNode);
+        currentSize++;
     }
     /**
      * Removes the first node in the list.
@@ -96,7 +111,13 @@ abstract class LinkedList<E> implements Serializable {
      */
     E removeFirstNode(){
  	//TODO: Left as an exercise.
-	return null;
+        E element = head.getElement();
+        head = head.getNext();
+        currentSize--;
+        if (isEmpty()) {
+            tail = null;
+        }
+        return element;
     }
 
     /**
@@ -105,7 +126,16 @@ abstract class LinkedList<E> implements Serializable {
      */
     E removeLastNode(pairNode<E> pair){
 	//TODO: Left as an exercise.
-        return null;
+        E element = tail.getElement();
+        if (currentSize == 1) {
+            head = null;
+            tail = null;
+        } else {
+            pair.prev().setNext(null);
+            tail = pair.prev();
+        }
+        currentSize--;
+        return element;
     }
     /**
      * remove the node pair.node()
@@ -114,6 +144,8 @@ abstract class LinkedList<E> implements Serializable {
      */
     void removeMiddleNode(pairNode<E> pair) {
         //TODO: Left as an exercise.
+        pair.prev().setNext(pair.node().getNext());
+        currentSize--;
     }
 
     /**
@@ -123,28 +155,52 @@ abstract class LinkedList<E> implements Serializable {
      */
     pairNode<E>  nodeOf(E element){
         //TODO: Left as an exercise.
+        LinkedNode<E> prev = null;
+        LinkedNode<E> curr = head;
+        while (curr!= null) {
+            if ((element == null && curr.getElement() == null) ||
+                    (element != null && element.equals(curr.getElement()))) {
+                return new pairNode<>(prev, curr);
+            }
+            prev = curr;
+            curr = curr.getNext();
+        }
         return null;
     }
 
     LinkedNode<E> getFirstNode(){
         //TODO: Left as an exercise.
-        return null;
+        return head;
     }
 
     LinkedNode<E> getLastNode(){
         //TODO: Left as an exercise.
-        return null;
+        return tail;
     }
      // MANUAL SERIALIZATION
     @Serial
     private void writeObject(ObjectOutputStream oos) throws IOException {
         //TODO: Left as an exercise.
+        writeData(oos);
+        oos.writeInt(currentSize);
+        LinkedNode<E> node = head;
+        while (node != null) {
+            oos.writeObject(node.getElement());
+            node = node.getNext();
+        }
     }
 
     // MANUAL DESERIALIZATION
     @Serial
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         //TODO: Left as an exercise.
+        readData(ois);
+        int size = ois.readInt();
+        for (int i = 0; i < size; i++) {
+            @SuppressWarnings("unchecked")
+            E element = (E) ois.readObject();
+            addElem(element);
+        }
     }
 
     void writeData(ObjectOutputStream out) throws IOException{
