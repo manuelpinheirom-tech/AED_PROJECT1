@@ -7,10 +7,10 @@ import dataStructures.*;
 public class Main {
 
     private static final String HELP = "help\n";
-    private static final String ADD = "addCity\n";
-    private static final String REMOVE = "removeCity\n";
+    private static final String ADD = "addcity\n";
+    private static final String REMOVE = "removecity\n";
     private static final String POPULATION = "population\n";
-    private static final String LIST = "listCities\n";
+    private static final String LIST = "listcities\n";
     private static final String QUIT = "quit\n";
     private static final String QUIT_MSG = "City directory saved.\n" +
     "Goodbye.\n";
@@ -38,8 +38,8 @@ public class Main {
     }
 
     private static void commandInterpreter(Scanner in, App app) {
-        String command = in.nextLine();
-        while(!command.equalsIgnoreCase(QUIT)) {
+        String command = in.nextLine().toLowerCase();
+        while(!command.equals(QUIT)) {
             switch (command) {
                 case HELP -> help();
                 case ADD -> add(in, app);
