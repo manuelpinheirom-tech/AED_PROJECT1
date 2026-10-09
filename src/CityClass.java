@@ -1,7 +1,10 @@
-public class CityClass implements City{
+import java.io.Serializable;
 
-    final int population;
-    final String name;
+public class CityClass implements City, Serializable {
+    private static final long serialVersionUID = 0L;
+
+    private final int population;
+    private final String name;
 
     public CityClass(int population, String name){
         this.population = population;
@@ -19,16 +22,4 @@ public class CityClass implements City{
     }
 
 
-    /*public int compareTo(City other){
-        int countryComp = this.country.compareToIgnoreCase(other.getCountry());
-        if(countryComp != 0){
-            return countryComp;
-        }
-        int popComp = Integer.compare(other.getInhabitants(), this.inhabitants);
-        if(popComp != 0){
-            return popComp;
-        }
-        return this.name.compareToIgnoreCase(other.getName());
-    }
-    */
 }

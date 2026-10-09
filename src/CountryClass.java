@@ -2,10 +2,13 @@ import dataStructures.Iterator;
 import dataStructures.SortedLinkedList;
 import dataStructures.exceptions.NoSuchElementException;
 
-public class CountryClass implements Country {
+import java.io.Serializable;
 
-    SortedLinkedList<City> cities;
-    String name;
+public class CountryClass implements Country, Serializable {
+    private static final long serialVersionUID = 0L;
+
+    private final SortedLinkedList<City> cities;
+    private final String name;
 
     public CountryClass(String name) {
         cities = new SortedLinkedList<>(new CityComparator());
@@ -20,14 +23,12 @@ public class CountryClass implements Country {
     @Override
     public void removeCity(String name) {
         City city = findCity(name);
-        cities.remove(city);
+        if (city != null)
+            cities.remove(city);
     }
 
     @Override
     public City findCity(String name) {
-        if(cities.isEmpty()) {
-            return null;
-        }
         Iterator<City> iterator = cities.iterator();
         while (iterator.hasNext()) {
             City city = iterator.next();
@@ -53,17 +54,7 @@ public class CountryClass implements Country {
 
     @Override
     public boolean hasCity(String name) {
-        if(cities.isEmpty()) {
-            return false;
-        }
-        Iterator<City> itCity = cities.iterator();
-        while (itCity.hasNext()) {
-            City c = itCity.next();
-            if (c.getName().equalsIgnoreCase(name)) {
-                return true;
-            }
-        }
-        return false;
+        return findCity(name) != null;
     }
 
     @Override

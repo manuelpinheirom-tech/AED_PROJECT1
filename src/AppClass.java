@@ -16,7 +16,7 @@ public class AppClass implements App, Serializable {
     }
 
     @Override
-    public void addCity(String city, String countryName, int population) throws NoSuchElementException {
+    public void addCity(String city, String countryName, int population) throws ElementAlreadyExistsException {
         Country country = findCountry(countryName);
         if (country == null)
             country = addCountry(countryName);
