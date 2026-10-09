@@ -45,7 +45,7 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
      * @return last element in the list
      * @throws NoSuchElementException - if size() == 0
      */
-    public E getMax( ) {
+    public E getMax( ) throws NoSuchElementException {
         //TODO: Left as an exercise.
         if (isEmpty())
             throw new NoSuchElementException();
@@ -156,6 +156,7 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
 
     void addElem(E element){
         //TODO: Left as an exercise.
+        addLast(element);
     }
 
 
