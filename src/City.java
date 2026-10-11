@@ -1,4 +1,4 @@
 public interface City {
-    String getName();
-    int getPopulation();
+    String name();
+    int population();
 }

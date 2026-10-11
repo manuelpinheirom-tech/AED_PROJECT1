@@ -82,7 +82,7 @@ public class Main {
         }
         try (ObjectInputStream doc = new ObjectInputStream(new FileInputStream(file))) {
             AppClass app = (AppClass) doc.readObject();
-            System.out.println(CITIES_RESTORED);
+            System.out.printf(CITIES_RESTORED);
             return app;
         } catch (Exception e) {
             System.out.printf(NO_CITIES);
@@ -132,7 +132,7 @@ public class Main {
                 Iterator<City> itCity = country.listCities();
                 while (itCity.hasNext()) {
                     City city = itCity.next();
-                    System.out.printf(LIST_MSG, country.getName(), city.getPopulation(), city.getName());
+                    System.out.printf(LIST_MSG, country.getName(), city.population(), city.name());
                 }
             }
         }catch(NoSuchElementException e){

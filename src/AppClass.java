@@ -4,15 +4,18 @@ import dataStructures.SortedLinkedList;
 import dataStructures.exceptions.ElementAlreadyExistsException;
 import dataStructures.exceptions.NoSuchElementException;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class AppClass implements App, Serializable {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     SortedLinkedList<Country> countries;
 
     public AppClass() {
-        this.countries = new SortedLinkedList<Country>(new CountryComparator());
+        this.countries = new SortedLinkedList<>(new CountryComparator());
     }
 
     @Override
@@ -47,7 +50,7 @@ public class AppClass implements App, Serializable {
         if (city == null) {
             throw new NoSuchElementException();
         }
-        return city.getPopulation();
+        return city.population();
     }
 
     @Override

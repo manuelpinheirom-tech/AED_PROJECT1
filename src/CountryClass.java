@@ -2,9 +2,12 @@ import dataStructures.Iterator;
 import dataStructures.SortedLinkedList;
 import dataStructures.exceptions.NoSuchElementException;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class CountryClass implements Country, Serializable {
+
+    @Serial
     private static final long serialVersionUID = 0L;
 
     private final SortedLinkedList<City> cities;
@@ -32,7 +35,7 @@ public class CountryClass implements Country, Serializable {
         Iterator<City> iterator = cities.iterator();
         while (iterator.hasNext()) {
             City city = iterator.next();
-            if(city.getName().equalsIgnoreCase(name)){
+            if(city.name().equalsIgnoreCase(name)){
                 return city;
             }
         }

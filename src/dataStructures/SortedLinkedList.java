@@ -120,7 +120,7 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
      */
     void addFirst( E element ) {
         //TODO: Left as an exercise.
-        LinkedNode<E> newNode = new SinglyListNode<E>(element, null);
+        LinkedNode<E> newNode = new SinglyListNode<>(element, null);
         addFirstNode(newNode);
     }
 
@@ -130,7 +130,7 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
      */
     void addLast( E element ) {
         //TODO: Left as an exercise.
-        LinkedNode<E> newNode = new SinglyListNode<E>(element, null);
+        LinkedNode<E> newNode = new SinglyListNode<>(element, null);
         addLastNode(newNode);
     }
 
@@ -151,7 +151,6 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
         else
             removeMiddleNode(pair);
         return removed;
-        //VE ME SE ESTA MERDA FAZ SENTUIDO SFF
     }
 
     void addElem(E element){
@@ -159,13 +158,20 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
         addLast(element);
     }
 
-
     private boolean invariant() {
-        //TODO: Left as an exercise.
+        Iterator<E> it = iterator();
+        if (!it.hasNext()) return true;
+        E elemP = it.next();
+        while (it.hasNext()) {
+            E elemN = it.next();
+            if (comparator.compare(elemP, elemN) > 0) {
+                return false;
+            }
+            elemP = elemN;
+        }
         return true;
-        //MANU VE ESTA MERDA QUE TA NO ULTIMO SLIDE DO ULTIMO PPT E FAZ Q EU N TENHO PACIENCIA. ORBIGADFO
-        //AGRADECE AO GEMINI TB
     }
+
 
     void writeData(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject(); // write the normal attributes
