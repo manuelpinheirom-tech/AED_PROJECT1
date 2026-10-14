@@ -178,9 +178,9 @@ public class Main {
      */
     private static void list(App app) {
         try{
-            Iterator<Country> itCountry = app.listCountries();
+            Iterator<? extends CountryInfo> itCountry = app.listCountries();
             while(itCountry.hasNext()) {
-                Country country = itCountry.next();
+                CountryInfo country = itCountry.next();
                 Iterator<City> itCity = country.listCities();
                 while (itCity.hasNext()) {
                     City city = itCity.next();

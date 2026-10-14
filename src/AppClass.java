@@ -81,7 +81,7 @@ public class AppClass implements App, Serializable {
      */
     @Override
     public int getPopulation(String cityName, String countryName) throws NoSuchElementException {
-        Country country = findCountry(countryName);
+        CountryInfo country = findCountry(countryName);
         City city;
         if (country == null) {
             throw new NoSuchElementException();

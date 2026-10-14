@@ -90,12 +90,14 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
             addFirst(element);
         } else {
             LinkedNode<E> prev = head;
-            LinkedNode<E> curr = head.getNext();
-            while (comparator.compare(element, curr.getElement()) >= 0) {
-                prev = curr;
-                curr = curr.getNext();
+//            LinkedNode<E> curr = head.getNext();
+            while (comparator.compare(element, prev.getNext().getElement()) >= 0) {
+                prev = prev.getNext();
+//                curr = curr.getNext();
             }
-            addMiddleNode(new pairNode<>(prev, curr), new SinglyListNode<>(element, null));
+            addBeforeNode(element, prev);
+
+//            addMiddleNode(new pairNode<>(prev, preb), new SinglyListNode<>(element, null));
         }
         assert invariant();
     }
@@ -108,10 +110,7 @@ public class SortedLinkedList<E> extends LinkedList<E> implements SortedList<E> 
      */
     void addBeforeNode(E element, LinkedNode<E> before){
         //TODO: Left as an exercise.
-        LinkedNode<E> prev = head;
-        while (prev != null && prev.getNext() != before)
-            prev = prev.getNext();
-        addMiddleNode(new pairNode<>(prev, before), new SinglyListNode<>(element, null));
+        addMiddleNode(new pairNode<>(before, before.getNext()), new SinglyListNode<>(element, null));
     }
 
     /**
