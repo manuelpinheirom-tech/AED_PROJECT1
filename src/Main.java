@@ -83,7 +83,6 @@ public class Main {
             oos.writeObject(app);
             System.out.print(Message.QUIT);
             oos.flush();
-            oos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

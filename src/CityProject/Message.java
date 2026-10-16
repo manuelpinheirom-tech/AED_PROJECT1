@@ -7,12 +7,14 @@ package CityProject;
  */
 public enum Message {
     QUIT("CityProject.City directory saved.\nGoodbye.\n"),
-    HELP("addCity: Adds a new city to the directory.\n" +
-            "removeCity: Removes an existing city from the directory.\n" +
-            "population: Returns the number of inhabitants of a city.\n" +
-            "listCities: Lists all cities currently stored in the directory.\n" +
-            "help: Displays the list of available commands.\n" +
-            "quit: Terminates the application.\n"),
+    HELP("""
+            addCity: Adds a new city to the directory.
+            removeCity: Removes an existing city from the directory.
+            population: Returns the number of inhabitants of a city.
+            listCities: Lists all cities currently stored in the directory.
+            help: Displays the list of available commands.
+            quit: Terminates the application.
+            """),
     ADDED("CityProject.City successfully added.\n"),
     ALREADY_EXISTS("CityProject.City already exists.\n"),
     REMOVED("CityProject.City successfully removed.\n"),
