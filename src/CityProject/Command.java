@@ -1,3 +1,5 @@
+package CityProject;
+
 /**
  * Enum representing the available commands in the application.
  * Space Complexity: O(1) auxiliary space, as it contains a strictly fixed 
@@ -15,7 +17,7 @@ public enum Command {
     private final String keyword;
 
     /**
-     * Constructor for the Command enum.
+     * Constructor for the CityProject.Command enum.
      * Time Complexity: 
      * - Best and Worst case: O(1).
      * @param keyword the string representation of the command.
@@ -25,13 +27,13 @@ public enum Command {
     }
 
     /**
-     * Parses a string and returns the corresponding Command enum.
+     * Parses a string and returns the corresponding CityProject.Command enum.
      * Time Complexity:
      * - Best case: O(1) (if the text is null or matches the first constant).
      * - Worst case: O(n) (the number of commands is fixed, so iterating through values()
      *   and comparing strings takes bounded, constant time).
      * @param text the input string to parse.
-     * @return the corresponding Command, or UNKNOWN if no match is found.
+     * @return the corresponding CityProject.Command, or UNKNOWN if no match is found.
      */
     public static Command fromString(String text) {
         if (text == null) return UNKNOWN;

@@ -1,3 +1,5 @@
+package CityProject;
+
 import dataStructures.Iterator;
 import dataStructures.SortedLinkedList;
 import dataStructures.exceptions.NoSuchElementException;
@@ -6,7 +8,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * Implementation of the Country interface, managing a collection of cities.*
+ * Implementation of the CityProject.Country interface, managing a collection of cities.*
  * Space Complexity: O(C) auxiliary space, where C is the number of cities
  * stored within this specific country.
  */
@@ -19,7 +21,7 @@ public class CountryClass implements Country, Serializable {
     private final String name;
 
     /**
-     * Constructor for the CountryClass.*
+     * Constructor for the CityProject.CountryClass.*
      * Time Complexity:
      * - Best and Worst case: O(1) to initialize the string reference and the empty sorted linked list.
      *
@@ -31,14 +33,10 @@ public class CountryClass implements Country, Serializable {
     }
 
     /**
-     * Adds a new city to the country.*
      * Time Complexity:
      * - Best case: O(1) (if the new city is inserted at the head of the sorted linked list).
      * - Worst case: O(C) where C is the number of cities currently in the country.
      *   (Insertion into a sorted linked list requires traversing to find the correct sorted position).
-     *
-     * @param city the name of the city.
-     * @param population the population of the city.
      */
     @Override
     public void addCity(String city, int population) {
@@ -46,13 +44,10 @@ public class CountryClass implements Country, Serializable {
     }
 
     /**
-     * Removes a city from the country by its name.*
      * Time Complexity:
      * - Best case: O(1) (if the city to remove is the first element in the list).
      * - Worst case: O(C) where C is the number of cities in the country.
      *   (Requires O(C) to find the city and O(C) to remove it from the linked list).
-     *
-     * @param name the name of the city to remove.
      */
     @Override
     public void removeCity(String name) {
@@ -62,14 +57,10 @@ public class CountryClass implements Country, Serializable {
     }
 
     /**
-     * Searches for a city within the country by its name.*
      * Time Complexity:
      * - Best case: O(1) (if the city is the first one in the list).
      * - Worst case: O(C) where C is the number of cities in the country.
      *   (Performs a linear search, iterating through the entire list if the city is at the end or does not exist).
-     *
-     * @param name the name of the city to find.
-     * @return the City object if found, or null if it doesn't exist.
      */
     @Override
     public City findCity(String name) {
@@ -84,12 +75,8 @@ public class CountryClass implements Country, Serializable {
     }
 
     /**
-     * Returns an iterator over all cities stored in this country.*
      * Time Complexity:
      * - Best and Worst case: O(1) to create and return the iterator.
-     *
-     * @return an Iterator over the stored City objects.
-     * @throws NoSuchElementException if there are no cities available.
      */
     @Override
     public Iterator<City> listCities() {
@@ -100,11 +87,8 @@ public class CountryClass implements Country, Serializable {
     }
 
     /**
-     * Retrieves the name of the country.*
      * Time Complexity:
      * - Best and Worst case: O(1).
-     *
-     * @return the name of the country.
      */
     @Override
     public String getName() {
@@ -112,14 +96,10 @@ public class CountryClass implements Country, Serializable {
     }
 
     /**
-     * Checks if a specific city exists in this country.*
      * Time Complexity:
      * - Best case: O(1) (if the city is the first element in the list).
      * - Worst case: O(C) where C is the number of cities in the country
      *   (as it strictly depends on the findCity method).
-     *
-     * @param name the name of the city to check.
-     * @return true if the city exists, false otherwise.
      */
     @Override
     public boolean hasCity(String name) {
@@ -127,11 +107,8 @@ public class CountryClass implements Country, Serializable {
     }
 
     /**
-     * Checks whether this country has no cities.
      * Time Complexity:
      * - Best and Worst case: O(1) assuming the underlying SortedLinkedList tracks its state/size.
-     *
-     * @return true if there are no cities in the country, false otherwise.
      */
     @Override
     public boolean isEmpty() {

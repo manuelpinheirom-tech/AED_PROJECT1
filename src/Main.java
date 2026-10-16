@@ -1,3 +1,4 @@
+import CityProject.*;
 import dataStructures.Iterator;
 
 import java.io.*;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 /**
  * Main class that manages user interaction and the application's lifecycle.
  * Space Complexity: O(1) auxiliary space (the memory grows based on the data
- * stored in the App instance, but the Main class itself only manages references).
+ * stored in the CityProject.App instance, but the Main class itself only manages references).
  */
 public class Main {
 
